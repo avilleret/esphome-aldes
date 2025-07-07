@@ -1,0 +1,20 @@
+esphome:
+  name: inspirair
+  friendly_name: Inspirair Host
+
+host:
+  mac_address: "06:35:69:ab:f6:79"
+
+logger:
+  level: DEBUG
+
+api:
+
+uart:
+  id: usb0
+  port: /dev/ttyUSB0
+  baud_rate: 115200
+  stop_bits: 1
+  parity: EVEN
+
+<<: !include inspirair-side.yaml

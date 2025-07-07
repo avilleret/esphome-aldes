@@ -1,0 +1,18 @@
+esphome:
+  name: inspirair
+
+host:
+  mac_address: "06:35:69:ab:f6:79"
+
+logger:
+  level: DEBUG
+
+api:
+
+uart:
+  id: usb0
+  port: /dev/ttyUSB0
+  baud_rate: 9600
+  stop_bits: 1
+
+<<: !include inspirair.yaml

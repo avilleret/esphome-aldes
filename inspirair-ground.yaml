@@ -1,0 +1,40 @@
+esphome:
+  name: inspirair-ground
+  friendly_name: Inspirair Ground
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  networks:
+  - ssid: !secret ssid1
+    password: !secret password1
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Inspirair-Ground"
+    password: "4topRODFzlWf"
+
+captive_portal:
+
+uart:
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+  baud_rate: 115200
+  stop_bits: 1
+  parity: EVEN
+
+<<: !include inspirair-side.yaml
