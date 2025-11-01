@@ -24,6 +24,7 @@ sensor:
     register_type: holding
     address: 0x0164
     unit_of_measurement: "m3/h"
+    entity_category: diagnostic
 
   - platform: modbus_controller
     modbus_controller_id: modbus_device
@@ -31,6 +32,7 @@ sensor:
     register_type: holding
     address: 0x0165
     unit_of_measurement: "m3/h"
+    entity_category: diagnostic
   
   - platform: modbus_controller
     modbus_controller_id: modbus_device
@@ -38,6 +40,7 @@ sensor:
     register_type: holding
     address: 0x0162
     unit_of_measurement: "rpm"
+    entity_category: diagnostic
 
   - platform: modbus_controller
     modbus_controller_id: modbus_device
@@ -45,6 +48,7 @@ sensor:
     register_type: holding
     address: 0x0163
     unit_of_measurement: "rpm"
+    entity_category: diagnostic
 
   - platform: modbus_controller
     modbus_controller_id: modbus_device
@@ -54,6 +58,7 @@ sensor:
     unit_of_measurement: "°C"
     lambda: return x * 0.01;
     accuracy_decimals: 2
+    entity_category: diagnostic
   
   - platform: modbus_controller
     modbus_controller_id: modbus_device
@@ -63,6 +68,7 @@ sensor:
     unit_of_measurement: "°C"
     lambda: return x * 0.01;
     accuracy_decimals: 2
+    entity_category: diagnostic
 
   - platform: modbus_controller
     modbus_controller_id: modbus_device
@@ -72,6 +78,7 @@ sensor:
     unit_of_measurement: "°C"
     lambda: return x * 0.01;
     accuracy_decimals: 2
+    entity_category: diagnostic
 
   - platform: modbus_controller
     modbus_controller_id: modbus_device
@@ -81,6 +88,7 @@ sensor:
     unit_of_measurement: "°C"
     lambda: return x * 0.01;
     accuracy_decimals: 2
+    entity_category: diagnostic
 
   - platform: modbus_controller
     modbus_controller_id: modbus_device
@@ -90,6 +98,15 @@ sensor:
     unit_of_measurement: "Pa"
     lambda: return x * 0.1;
     accuracy_decimals: 2
+    entity_category: diagnostic
+
+  - platform: modbus_controller
+    modbus_controller_id: modbus_device
+    name: Stepper Motor Reduction Coefficient
+    register_type: holding
+    address: 0x0303
+    accuracy_decimals: 0
+    entity_category: diagnostic
 
 select:
   - platform: modbus_controller
@@ -125,7 +142,33 @@ select:
       "Max": 4
 
   - platform: modbus_controller
-    name: "Bypass Mode"
+    name: Insuflation Filter Type
+    use_write_multiple: true
+    address: 0x01EA
+    optionsmap:
+      "Unknown": 0
+      "Dust": 1
+      "Pollen": 2
+      "Particules": 3
+      "Fine Particules": 4
+      "Bacteria": 5
+      "VOC": 6
+      
+  - platform: modbus_controller
+    name: Extraction Filter Type
+    use_write_multiple: true
+    address: 0x01EB
+    optionsmap:
+      "Unknown": 0
+      "Dust": 1
+      "Pollen": 2
+      "Particules": 3
+      "Fine Particules": 4
+      "Bacteria": 5
+      "VOC": 6
+
+  - platform: modbus_controller
+    name: Bypass Status
     use_write_multiple: true
     address: 0x0103
     optionsmap:
