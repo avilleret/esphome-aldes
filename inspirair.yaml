@@ -156,10 +156,23 @@ switch:
 number:
   - platform: modbus_controller
     register_type: holding
+    value_type: S_WORD
+    address: 0x01E6
+    name: Confort Temperature
+    step: 0.1
+    lambda: return x * 0.01;
+    write_lambda: return static_cast<short>(x * 100);
+    use_write_multiple: true
+
+  - platform: modbus_controller
+    register_type: holding
+    value_type: S_WORD
     address: 0x01EC
     name: Bypass Switch Temperature
+    step: 0.1
     lambda: return x * 0.01;
-    write_lambda: return x * 100;
+    write_lambda: return static_cast<short>(x * 100);
+    use_write_multiple: true
 
   - platform: modbus_controller
     register_type: holding
