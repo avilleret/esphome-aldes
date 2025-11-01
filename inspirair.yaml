@@ -135,6 +135,98 @@ select:
 text_sensor:
   - platform: modbus_controller
     register_type: holding
+    address: 0x0022
+    raw_encode: HEXBYTES
+    name: Product Id
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      switch (value) {
+        case 3471: return std::string("VEX 40 T Classic");
+        case 3472: return std::string("VEX 40 T Premium");
+        case 3473: return std::string("Inspirair Top 300 Classic");
+        case 3474: return std::string("Inspirair Top 300 Premlium");
+        case 3475: return std::string("Inspirair Top 450 Classic");
+        case 3476: return std::string("Inspirair Top 450 Premlium");
+        case 3477: return std::string("Inspirair Top 300 ERV");
+        case 3478: return std::string("Inspirair Top 450 ERV"); // not sur of this value, documentation is truncated
+        case 2: return std::string("Summer");
+        default: return std::string("Unknown");
+      }
+      return x;
+
+  - platform: modbus_controller
+    register_type: holding
+    address: 0x0180
+    raw_encode: HEXBYTES
+    name: Error Code
+    entity_category: diagnostic
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      switch (value) {
+        case 0: return std::string("No Error");
+        case 49: return std::string("No Product Id");
+        case 50: return std::string("No Primary Setup");
+        case 53: return std::string("Pressure Sensor Defect");
+        case 70: return std::string("Dry Contact Active");
+        case 72: return std::string("Humidity Sensor Defect");
+        case 76: return std::string("CO2 Sensor Defect");
+        case 81: return std::string("BCA Absente");
+        case 82: return std::string("Echec BCA");
+        case 83: return std::string("Défaut BCA PréChauf. Ext.");
+        case 84: return std::string("Défaut PréChauffage Int.");
+        case 85: return std::string("Défaut BCA PostChauf. Ext.");
+        case 90: return std::string("Echec Test FireDamper");
+        case 91: return std::string("FireDamper Fermé");
+        case 182: return std::string("Défaillance MVE");
+        case 183: return std::string("Défaillance MVI");
+        case 239: return std::string("Défaut sonde Rejet");
+        case 240: return std::string("Défaut sonde Extérieur");
+        case 241: return std::string("Défaut sonde Insufflation");
+        case 251: return std::string("Défaut Sonde VMC");
+        default: return std::string("Unknown");
+      }
+      return x;
+
+
+  - platform: modbus_controller
+    register_type: holding
+    address: 0x0590
+    raw_encode: HEXBYTES
+    name: Current USB Behaviour
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      switch (value) {
+        case 0: return std::string("None");
+        case 1: return std::string("Host");
+        case 2: return std::string("Device");
+        default: return std::string("Auto detecting");
+      }
+      return x;
+
+  - platform: modbus_controller
+    register_type: holding
+    address: 0x0591
+    raw_encode: HEXBYTES
+    name: Current USB Behaviour Step
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      // Enum = "0:NotInit/1:InitHost/2:RunHost/3:DeInitHost/4:InitDevice/5:RunDevice/6:DeInitDevice/7:InitNone/8:RunNone"
+      switch (value) {
+        case 0: return std::string("Not Initialized");
+        case 1: return std::string("Initializing Host");
+        case 2: return std::string("Running Host");
+        case 3: return std::string("De-initializing Host");
+        case 4: return std::string("Initializing Device");
+        case 5: return std::string("Running Device");
+        case 6: return std::string("De-initializing Device");
+        case 7: return std::string("Initializing None");
+        case 8: return std::string("Running None");
+        default: return std::string("Auto detecting");
+      }
+      return x;
+
+  - platform: modbus_controller
+    register_type: holding
     address: 0x0175
     raw_encode: HEXBYTES
     name: Season
