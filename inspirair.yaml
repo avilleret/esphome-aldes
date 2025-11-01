@@ -338,6 +338,22 @@ number:
     use_write_multiple: true
 
   - platform: modbus_controller
+    modbus_controller_id: modbus_device
+    name: Bypass Open Angle
+    register_type: holding
+    address: 0x0301
+    unit_of_measurement: "°"
+    use_write_multiple: true
+
+  - platform: modbus_controller
+    modbus_controller_id: modbus_device
+    name: Bypass Close Angle
+    register_type: holding
+    address: 0x0302
+    unit_of_measurement: "°"
+    use_write_multiple: true
+
+  - platform: modbus_controller
     register_type: holding
     address: 0x0410
     name: Extraction Flow Setpoint - Absence
