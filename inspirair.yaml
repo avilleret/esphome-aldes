@@ -170,10 +170,12 @@ select:
   - platform: modbus_controller
     name: Bypass Status
     use_write_multiple: true
-    address: 0x0103
+    address: 0x0300
     optionsmap:
-      "Manual": 0
-      "Auto": 1
+      "Idle": 0
+      "Full Closed": 1
+      "Full Open": 2
+      "-": 65535
     
 text_sensor:
   - platform: modbus_controller
