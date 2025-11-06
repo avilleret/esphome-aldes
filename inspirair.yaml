@@ -20,7 +20,7 @@ interval:
 sensor:
   - platform: modbus_controller
     modbus_controller_id: modbus_device
-    name: Extraction Flow
+    name: Exhaust Flow
     register_type: holding
     address: 0x0164
     unit_of_measurement: "m3/h"
@@ -183,7 +183,7 @@ select:
       "VOC": 6
       
   - platform: modbus_controller
-    name: Extraction Filter Type
+    name: Exhaust Filter Type
     use_write_multiple: true
     address: 0x01EB
     optionsmap:
@@ -400,7 +400,7 @@ number:
   - platform: modbus_controller
     register_type: holding
     address: 0x0410
-    name: Extraction Flow Setpoint - Absence
+    name: Exhaust Flow Setpoint - Absence
     icon: mdi:fan-speed-1
     use_write_multiple: true
 
@@ -414,7 +414,7 @@ number:
   - platform: modbus_controller
     register_type: holding
     address: 0x0412
-    name: Extraction Flow Setpoint - Daily
+    name: Exhaust Flow Setpoint - Daily
     icon: mdi:fan-speed-2
     use_write_multiple: true
 
@@ -428,7 +428,7 @@ number:
   - platform: modbus_controller
     register_type: holding
     address: 0x0414
-    name: Extraction Flow Setpoint - Boost
+    name: Exhaust Flow Setpoint - Boost
     icon: mdi:fan-plus
     use_write_multiple: true
 
@@ -442,7 +442,7 @@ number:
   - platform: modbus_controller
     register_type: holding
     address: 0x0416
-    name: Extraction Flow Setpoint - Guest
+    name: Exhaust Flow Setpoint - Guest
     icon: mdi:fan-speed-3
     use_write_multiple: true
 
