@@ -36,7 +36,7 @@ sensor:
   
   - platform: modbus_controller
     modbus_controller_id: modbus_device
-    name: Extraction Fan Speed
+    name: Exhaust Fan Speed (Feedback)
     register_type: holding
     address: 0x0162
     unit_of_measurement: "rpm"
@@ -44,7 +44,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: modbus_device
-    name: "Supply Fan Speed"
+    name: Supply Fan Speed (Feedback)
     register_type: holding
     address: 0x0163
     unit_of_measurement: "rpm"
@@ -108,6 +108,34 @@ sensor:
     accuracy_decimals: 0
     entity_category: diagnostic
 
+  - platform: modbus_controller
+    register_type: holding
+    address: 0x0400
+    name: Exhaust Fan Voltage
+    unit_of_measurement: "V"
+    lambda: return x * 0.001;
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    register_type: holding
+    address: 0x0401
+    name: Supply Fan Voltage
+    unit_of_measurement: "V"
+    lambda: return x * 0.001;
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    register_type: holding
+    address: 0x0402
+    name: Exhaust Fan Speed
+    unit_of_measurement: "RPM"
+
+  - platform: modbus_controller
+    register_type: holding
+    address: 0x0403
+    name: Supply Fan Speed
+    unit_of_measurement: "RPM"
+
 select:
   - platform: modbus_controller
     id: user_level
@@ -166,7 +194,7 @@ select:
       "Fine Particules": 4
       "Bacteria": 5
       "VOC": 6
-
+  
   - platform: modbus_controller
     name: Bypass Status
     use_write_multiple: true
@@ -176,7 +204,7 @@ select:
       "Full Closed": 1
       "Full Open": 2
       "-": 65535
-    
+
 text_sensor:
   - platform: modbus_controller
     register_type: holding
@@ -312,6 +340,20 @@ text_sensor:
       }
       return x;
 
+  - platform: modbus_controller
+    register_type: holding
+    address: 0x0404
+    raw_encode: HEXBYTES
+    name: Fan Config
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      switch (value) {
+        case 1: return std::string("B");
+        case 2: return std::string("A");
+        default: return std::string("None");
+      }
+      return x;
+
 switch:
   - platform: modbus_controller
     register_type: holding
@@ -328,7 +370,7 @@ number:
     lambda: return x * 0.01;
     write_lambda: return static_cast<short>(x * 100);
     use_write_multiple: true
-
+    
   - platform: modbus_controller
     register_type: holding
     value_type: S_WORD
